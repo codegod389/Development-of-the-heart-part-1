@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heart Development 1: Embryology of the Heart</title>
+    <style>
+        :root {
+            --primary: #2c5282;
+            --secondary: #3182ce;
+            --accent: #63b3ed;
+            --light: #ebf8ff;
+            --dark: #1a365d;
+            --success: #38a169;
+            --warning: #d69e2e;
+            --danger: #e53e3e;
+            --heart-color: #e53e3e;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(rgba(44, 82, 130, 0.85), rgba(44, 82, 130, 0.9)), 
+                        url('https://i.ibb.co/HjLfn7p/t9duylpwvxf61.jpg') center/cover fixed;
+            color: #2d3748;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            padding: 40px 0;
+            background: linear-gradient(135deg, var(--primary), var(--heart-color));
+            color: white;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .icon {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 3rem;
+            opacity: 0.2;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.95;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .difficulty-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--heart-color), var(--warning));
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 1rem;
+            margin-top: 15px;
+            font-weight: bold;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .quiz-info {
+            display: flex;
+            justify-content: space-around;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 20px 30px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        
+        .info-item {
+            text-align: center;
+            padding: 10px;
+        }
+        
+        .info-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+        
+        .info-label {
+            font-size: 0.9rem;
+            color: #4a5568;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .quiz-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+        
+        .questions-section {
+            flex: 2;
+            min-width: 300px;
+            background: rgba(255, 255, 255, 0.97);
+            padding: 35px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
+            max-height: 85vh;
+            overflow-y: auto;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+        }
+        
+        .answer-section {
+            flex: 1;
+            min-width: 300px;
+            background: rgba(255, 255, 255, 0.97);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
+            display: none;
+            max-height: 85vh;
+            overflow-y: auto;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+        }
+        
+        .answer-section.visible {
+            display: block;
+        }
+        
+        .question {
+            margin-bottom: 35px;
+            padding-bottom: 30px;
+            border-bottom: 2px solid #e2e8f0;
+            position: relative;
+        }
+        
+        .question-number {
+            font-weight: bold;
+            color: var(--secondary);
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding-left: 5px;
+        }
+        
+        .question-number::before {
+            content: "Q";
+            background: linear-gradient(135deg, var(--primary), var(--heart-color));
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            font-weight: bold;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .question-text {
+            margin-bottom: 25px;
+            font-size: 1.15rem;
+            line-height: 1.8;
+            background: linear-gradient(to right, var(--light), #f7fafc);
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 5px solid var(--accent);
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.05);
+        }
+        
+        .embryo-note {
+            background: linear-gradient(to right, #f7fafc, #e2e8f0);
+            border-left: 5px solid var(--heart-color);
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+        
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .option {
+            padding: 18px 25px;
+            border: 2px solid #cbd5e0;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-size: 1.08rem;
+            background: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .option::before {
+            content: attr(data-letter);
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 40px;
+            background: #edf2f7;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: var(--dark);
+            border-right: 2px solid #cbd5e0;
+        }
+        
+        .option-content {
+            margin-left: 45px;
+        }
+        
+        .option:hover {
+            background-color: #f7fafc;
+            border-color: var(--secondary);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .option.selected {
+            background-color: #e6fffa;
+            border-color: var(--secondary);
+            box-shadow: 0 4px 12px rgba(49, 130, 206, 0.15);
+        }
+        
+        .option.correct {
+            background-color: #f0fff4;
+            border-color: var(--success);
+            box-shadow: 0 4px 12px rgba(56, 161, 105, 0.15);
+        }
+        
+        .option.incorrect {
+            background-color: #fff5f5;
+            border-color: var(--danger);
+            box-shadow: 0 4px 12px rgba(229, 62, 62, 0.15);
+        }
+        
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            gap: 20px;
+        }
+        
+        button {
+            padding: 18px 35px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-size: 1.15rem;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        button::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 5px;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.5);
+            opacity: 0;
+            border-radius: 100%;
+            transform: scale(1, 1) translate(-50%);
+            transform-origin: 50% 50%;
+        }
+        
+        button:focus:not(:active)::after {
+            animation: ripple 1s ease-out;
+        }
+        
+        @keyframes ripple {
+            0% {
+                transform: scale(0, 0);
+                opacity: 0.5;
+            }
+            100% {
+                transform: scale(20, 20);
+                opacity: 0;
+            }
+        }
+        
+        .submit-btn {
+            background: linear-gradient(135deg, var(--heart-color), var(--primary));
+            color: white;
+            flex: 2;
+        }
+        
+        .submit-btn:hover {
+            background: linear-gradient(135deg, var(--primary), var(--dark));
+            transform: translateY(-4px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        }
+        
+        .reset-btn {
+            background: linear-gradient(135deg, #ffffff, #f7fafc);
+            color: var(--dark);
+            flex: 1;
+            border: 2px solid #cbd5e0;
+        }
+        
+        .reset-btn:hover {
+            background: white;
+            transform: translateY(-4px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+        
+        .results-section {
+            margin-top: 50px;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.97);
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
+            display: none;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+        }
+        
+        .score-display {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px;
+            background: linear-gradient(135deg, var(--primary), var(--heart-color));
+            color: white;
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .score-display::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+            background-size: 20px 20px;
+            animation: float 20s linear infinite;
+        }
+        
+        @keyframes float {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            100% { transform: translate(-20px, -20px) rotate(360deg); }
+        }
+        
+        .score-value {
+            font-size: 4rem;
+            font-weight: bold;
+            margin: 15px 0;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            position: relative;
+            z-index: 1;
+        }
+        
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin: 40px 0;
+            gap: 25px;
+        }
+        
+        .stat-box {
+            text-align: center;
+            padding: 30px 20px;
+            border-radius: 12px;
+            background: white;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+            flex: 1;
+            transition: transform 0.3s;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .stat-box:hover {
+            transform: translateY(-5px);
+        }
+        
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .passed .stat-value {
+            color: var(--success);
+            background: linear-gradient(135deg, var(--success), #48bb78);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .failed .stat-value {
+            color: var(--danger);
+            background: linear-gradient(135deg, var(--danger), #fc8181);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .attempted .stat-value {
+            color: var(--secondary);
+            background: linear-gradient(135deg, var(--secondary), #4299e1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .answer-bank {
+            margin-top: 50px;
+        }
+        
+        .answer-item {
+            padding: 20px;
+            border-bottom: 1px solid #e2e8f0;
+            background: white;
+            margin-bottom: 15px;
+            border-radius: 10px;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.08);
+            transition: transform 0.2s;
+        }
+        
+        .answer-item:hover {
+            transform: translateY(-2px);
+        }
+        
+        .answer-correct {
+            color: var(--success);
+            font-weight: bold;
+            display: inline-block;
+            padding: 5px 10px;
+            background: #f0fff4;
+            border-radius: 5px;
+            margin: 5px 0;
+        }
+        
+        .answer-incorrect {
+            color: var(--danger);
+            font-weight: bold;
+            display: inline-block;
+            padding: 5px 10px;
+            background: #fff5f5;
+            border-radius: 5px;
+            margin: 5px 0;
+        }
+        
+        .support-section {
+            text-align: center;
+            margin-top: 50px;
+            padding: 35px;
+            background: linear-gradient(135deg, var(--primary), var(--heart-color));
+            color: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .support-link {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            display: inline-block;
+            margin-top: 20px;
+            padding: 15px 30px;
+            background-color: rgba(255, 255, 255, 0.15);
+            border-radius: 10px;
+            transition: all 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
+        }
+        
+        .support-link:hover {
+            background-color: rgba(255, 255, 255, 0.25);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+        
+        .share-section {
+            text-align: center;
+            margin-top: 40px;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 12px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+            border: 1px solid rgba(0, 0, 0, 0.08);
+        }
+        
+        .share-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 25px;
+            flex-wrap: wrap;
+        }
+        
+        .share-btn-small {
+            padding: 15px 25px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            min-width: 180px;
+            justify-content: center;
+        }
+        
+        .share-twitter {
+            background: linear-gradient(135deg, #1DA1F2, #0d8bd9);
+            color: white;
+        }
+        
+        .share-facebook {
+            background: linear-gradient(135deg, #4267B2, #365899);
+            color: white;
+        }
+        
+        .share-whatsapp {
+            background: linear-gradient(135deg, #25D366, #128C7E);
+            color: white;
+        }
+        
+        .share-copy {
+            background: linear-gradient(135deg, var(--heart-color), var(--primary));
+            color: white;
+        }
+        
+        .progress-bar {
+            height: 10px;
+            background: #e2e8f0;
+            border-radius: 5px;
+            margin: 25px 0;
+            overflow: hidden;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .progress {
+            height: 100%;
+            background: linear-gradient(90deg, var(--heart-color), var(--primary));
+            transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .progress::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            animation: shimmer 2s infinite;
+        }
+        
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        
+        @media (max-width: 1200px) {
+            .quiz-container { flex-direction: column; }
+            .stats { flex-direction: column; gap: 20px; }
+            .share-buttons { flex-direction: column; align-items: center; }
+            .share-btn-small { width: 100%; max-width: 300px; }
+            h1 { font-size: 2rem; }
+            .score-value { font-size: 3rem; }
+        }
+        
+        @media (max-width: 768px) {
+            .controls { flex-direction: column; }
+            button { width: 100%; }
+            h1 { font-size: 1.7rem; }
+            .score-value { font-size: 2.5rem; }
+            .question-text { font-size: 1.1rem; padding: 15px; }
+            .option { padding: 15px 20px; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <header>
+        <div class="icon">❤️</div>
+        <h1>Heart Development 1: Embryology of the Heart</h1>
+        <p class="subtitle">50 Questions on Cardiovascular Development, Heart Tube Formation, Looping, Partitioning & Clinical Correlations</p>
+        <div class="difficulty-badge">EMBRYOLOGY – CARDIOVASCULAR SYSTEM</div>
+    </header>
+    
+    <div class="quiz-info">
+        <div class="info-item"><div class="info-value">50</div><div class="info-label">Questions</div></div>
+        <div class="info-item"><div class="info-value">Heart Tube</div><div class="info-label">Formation & Looping</div></div>
+        <div class="info-item"><div class="info-value">Partitioning</div><div class="info-label">Septation & Valves</div></div>
+        <div class="info-item"><div class="info-value">Clinicals</div><div class="info-label">Congenital Anomalies</div></div>
+    </div>
+    
+    <div class="progress-bar"><div class="progress" id="progress-bar" style="width:0%"></div></div>
+    
+    <div class="quiz-container">
+        <div class="questions-section" id="questions-section"></div>
+        <div class="answer-section" id="answer-section">
+            <h2>Answer Bank</h2>
+            <div id="answer-bank"></div>
+        </div>
+    </div>
+    
+    <div class="controls">
+        <button class="reset-btn" id="reset-btn">Reset Quiz</button>
+        <button class="submit-btn" id="submit-btn">Submit Answers</button>
+    </div>
+    
+    <div class="results-section" id="results-section">
+        <div class="score-display">
+            <h2>Your Heart Development Score</h2>
+            <div class="score-value" id="score-value">0/50</div>
+            <p>Embryology of the Heart – From Primordium to Functional Four‑Chambered Organ</p>
+        </div>
+        <div class="stats">
+            <div class="stat-box attempted"><div class="stat-value" id="attempted-value">0</div><div class="stat-label">Attempted</div></div>
+            <div class="stat-box passed"><div class="stat-value" id="passed-value">0</div><div class="stat-label">Passed</div></div>
+            <div class="stat-box failed"><div class="stat-value" id="failed-value">0</div><div class="stat-label">Failed</div></div>
+        </div>
+        <div class="share-section">
+            <h3>Share Results</h3>
+            <div class="share-buttons">
+                <button class="share-btn-small share-twitter" id="share-twitter">🐦 Twitter</button>
+                <button class="share-btn-small share-facebook" id="share-facebook">📘 Facebook</button>
+                <button class="share-btn-small share-whatsapp" id="share-whatsapp">💬 WhatsApp</button>
+                <button class="share-btn-small share-copy" id="share-copy">📋 Copy</button>
+            </div>
+        </div>
+        <div class="answer-bank"><h3>Detailed Answers</h3><div id="detailed-answers"></div></div>
+    </div>
+    
+    <div class="support-section">
+        <h3>Follow Code God for More Medical Quizzes</h3>
+        <a href="https://www.tiktok.com/@code.god3?_r=1&_d=ZS-91SF7FxgGKu" target="_blank" class="support-link">Follow on TikTok</a>
+    </div>
+</div>
+
+<script>
+    // 50 questions exactly as provided with correct answers mapped to indices (A=0, B=1, C=2, D=3)
+    const rawData = [
+        { q: "The development of the cardiovascular system begins during the:", opts: ["First week", "Second week", "Middle of the third week", "Fifth week"], ans: 2 },
+        { q: "The cardiovascular system is the first major system to:", opts: ["Differentiate", "Develop and function", "Form valves", "Produce blood cells"], ans: 1 },
+        { q: "The embryo can no longer rely on simple diffusion because:", opts: ["The placenta degenerates", "The embryo is growing rapidly", "Blood vessels disappear", "The heart stops developing"], ans: 1 },
+        { q: "The primordium of the heart is formed mainly from:", opts: ["Ectoderm", "Neural tube", "Splanchnic mesoderm", "Surface ectoderm"], ans: 2 },
+        { q: "Which of the following contributes to heart development?", opts: ["Neural crest cells", "Surface ectoderm", "Intermediate mesoderm", "Notochord"], ans: 0 },
+        { q: "The earliest sign of heart development is the appearance of:", opts: ["Endocardial cushions", "Angioblastic cords", "Aortic arches", "Septum primum"], ans: 1 },
+        { q: "Angioblastic cords appear within the:", opts: ["Neural crest", "Somites", "Cardiogenic mesoderm", "Endoderm"], ans: 2 },
+        { q: "Angioblastic cords canalize to form:", opts: ["Cardiac valves", "Heart chambers", "Paired heart tubes", "Septa"], ans: 2 },
+        { q: "The paired heart tubes fuse as a result of:", opts: ["Neural crest migration", "Lateral embryonic folding", "Gastrulation", "Somitogenesis"], ans: 1 },
+        { q: "Fusion of the paired heart tubes produces:", opts: ["Aortic sac", "Sinus venosus", "Single embryonic heart tube", "Aortic arch"], ans: 2 },
+        { q: "The endothelial tube of the embryonic heart becomes the:", opts: ["Epicardium", "Myocardium", "Endocardium", "Pericardium"], ans: 2 },
+        { q: "The primordial myocardium develops into the:", opts: ["Endocardium", "Myocardium", "Epicardium", "Valves"], ans: 1 },
+        { q: "The gelatinous connective tissue between the endocardium and myocardium is called:", opts: ["Cardiac crest", "Endocardial cushion", "Cardiac jelly", "Mesocardium"], ans: 2 },
+        { q: "The epicardium is derived from:", opts: ["Mesothelium", "Endoderm", "Neural crest", "Notochord"], ans: 0 },
+        { q: "The embryonic heart begins beating during the:", opts: ["2nd week", "3rd week", "4th week", "8th week"], ans: 2 },
+        { q: "Initially, the developing heart lies:", opts: ["Caudal to the foregut", "Cephalad to the foregut", "Dorsal to the neural tube", "Within the yolk sac"], ans: 1 },
+        { q: "After folding of the head region, the heart becomes:", opts: ["Dorsal to the foregut", "Ventral to the foregut", "Inside the neural tube", "Posterior to the embryo"], ans: 1 },
+        { q: "Which structure is NOT one of the four recognizable parts of the elongated heart tube?", opts: ["Bulbus cordis", "Atrium", "Sinus venosus", "Septum secundum"], ans: 3 },
+        { q: "The arterial end of the developing heart is the:", opts: ["Atrium", "Ventricle", "Truncus arteriosus", "Sinus venosus"], ans: 2 },
+        { q: "The venous end of the developing heart is the:", opts: ["Bulbus cordis", "Sinus venosus", "Truncus arteriosus", "Aortic sac"], ans: 1 },
+        { q: "The truncus arteriosus is continuous cranially with the:", opts: ["Dorsal aorta", "Pulmonary trunk", "Aortic sac", "Coronary sinus"], ans: 2 },
+        { q: "The sinus venosus receives all of the following EXCEPT:", opts: ["Umbilical veins", "Vitelline veins", "Common cardinal veins", "Pulmonary veins"], ans: 3 },
+        { q: "Rapid growth of the bulbus cordis and ventricle causes the heart to form a:", opts: ["Spiral loop", "Circular loop", "U-shaped bulboventricular loop", "Figure-eight loop"], ans: 2 },
+        { q: "During cardiac looping, the atrium comes to lie:", opts: ["Ventral to the ventricle", "Dorsal to the ventricle", "Inferior to the ventricle", "Inside the ventricle"], ans: 1 },
+        { q: "The sinus venosus develops:", opts: ["Aortic valves", "Right and left sinus horns", "Pulmonary veins", "Coronary arteries"], ans: 1 },
+        { q: "As the heart elongates, it invaginates into the:", opts: ["Pleural cavity", "Cranial cavity", "Pericardial cavity", "Peritoneal cavity"], ans: 2 },
+        { q: "Initially, the heart is suspended by the:", opts: ["Ventral mesocardium", "Dorsal mesocardium", "Septum transversum", "Pleuropericardial membrane"], ans: 1 },
+        { q: "Degeneration of the central part of the dorsal mesocardium forms the:", opts: ["Coronary sinus", "Oval foramen", "Transverse pericardial sinus", "Pulmonary trunk"], ans: 2 },
+        { q: "Blood first enters the primordial heart through the:", opts: ["Primordial atrium", "Primordial ventricle", "Sinus venosus", "Bulbus cordis"], ans: 2 },
+        { q: "Blood flow from the sinus venosus into the atrium is regulated by:", opts: ["AV valves", "Semilunar valves", "Sinuatrial valves", "Tricuspid valves"], ans: 2 },
+        { q: "Blood passes from the primordial atrium to the ventricle through the:", opts: ["Aortic sac", "AV canal", "Coronary sinus", "Foramen ovale"], ans: 1 },
+        { q: "Blood leaves the primordial ventricle through the:", opts: ["Pulmonary veins", "AV canal", "Bulbus cordis and truncus arteriosus", "Coronary arteries"], ans: 2 },
+        { q: "Partitioning of the primordial heart begins around the:", opts: ["Beginning of 3rd week", "Middle of 4th week", "End of 5th week", "End of 8th week"], ans: 1 },
+        { q: "Partitioning of the heart is completed by the end of the:", opts: ["5th week", "6th week", "7th week", "8th week"], ans: 3 },
+        { q: "Partitioning of the AV canal is achieved primarily by:", opts: ["Neural crest cells", "Septum primum", "Endocardial cushions", "Aortic arches"], ans: 2 },
+        { q: "The endocardial cushions form on which walls of the AV canal?", opts: ["Right and left", "Cranial and caudal", "Dorsal and ventral", "Superior and inferior"], ans: 2 },
+        { q: "Fusion of the endocardial cushions divides the AV canal into:", opts: ["Superior and inferior canals", "Right and left AV canals", "Atrial and ventricular canals", "Pulmonary and systemic canals"], ans: 1 },
+        { q: "The primordial atrium is divided by:", opts: ["Two muscular ridges", "Septum primum and septum secundum", "Endocardial cushions only", "Aorticopulmonary septum"], ans: 1 },
+        { q: "The septum primum grows from the:", opts: ["Floor of the atrium", "Left atrium", "Roof of the primordial atrium", "AV canal"], ans: 2 },
+        { q: "The opening between the septum primum and endocardial cushions is called:", opts: ["Foramen ovale", "Foramen secundum", "Interventricular foramen", "Foramen primum"], ans: 3 },
+        { q: "The primary function of the foramen primum is to:", opts: ["Form the coronary sinus", "Allow shunting of oxygenated blood", "Separate the ventricles", "Form the pulmonary trunk"], ans: 1 },
+        { q: "The foramen primum disappears when:", opts: ["The septum secundum forms", "The AV canal closes", "Septum primum fuses with endocardial cushions", "Birth occurs"], ans: 2 },
+        { q: "Before the foramen primum closes, degeneration of the septum primum forms the:", opts: ["Foramen ovale", "Foramen secundum", "Coronary sinus", "AV canal"], ans: 1 },
+        { q: "The foramen secundum ensures continued:", opts: ["Ventricular contraction", "Blood shunting from right to left atrium", "Coronary circulation", "Valve formation"], ans: 1 },
+        { q: "The septum secundum develops:", opts: ["To the left of septum primum", "Within the ventricle", "To the right of septum primum", "Inside the sinus venosus"], ans: 2 },
+        { q: "The septum secundum is best described as:", opts: ["Thin and crescent-shaped", "Thick and muscular", "Gelatinous", "Endothelial"], ans: 1 },
+        { q: "The foramen ovale is formed when the septum secundum:", opts: ["Overlaps the foramen secundum", "Fuses with the ventricle", "Forms the coronary sinus", "Divides the AV canal"], ans: 0 },
+        { q: "The flap-like valve of the foramen ovale is formed by the:", opts: ["Septum secundum", "Endocardial cushion", "Remaining septum primum", "Bulbus cordis"], ans: 2 },
+        { q: "The primordial ventricle is partitioned first by the formation of the:", opts: ["Membranous IV septum", "Muscular IV septum", "Aorticopulmonary septum", "Septum secundum"], ans: 1 },
+        { q: "The muscular interventricular septum appears as a:", opts: ["Circular membrane", "Median ridge in the floor of the ventricle near its apex", "Dorsal fold of the atrium", "Valve-like structure"], ans: 1 }
+    ];
+    
+    // Build quiz data array with shuffled options
+    function shuffleArray(arr) { for (let i=arr.length-1; i>0; i--) { const j=Math.floor(Math.random()*(i+1)); [arr[i], arr[j]] = [arr[j], arr[i]]; } return arr; }
+    
+    // Preprocess: store shuffled options and new correct index
+    const quizData = rawData.map(item => {
+        const shuffledOpts = shuffleArray([...item.opts]);
+        const correctText = item.opts[item.ans];
+        const newCorrect = shuffledOpts.findIndex(opt => opt === correctText);
+        return {
+            q: item.q,
+            opts: shuffledOpts,
+            correct: newCorrect,
+            originalAnswer: item.ans // for reference
+        };
+    });
+    
+    document.addEventListener('DOMContentLoaded', function() {
+        const questionsDiv = document.getElementById('questions-section');
+        const answerBankDiv = document.getElementById('answer-bank');
+        const submitBtn = document.getElementById('submit-btn');
+        const resetBtn = document.getElementById('reset-btn');
+        const resultsDiv = document.getElementById('results-section');
+        const scoreSpan = document.getElementById('score-value');
+        const attemptedSpan = document.getElementById('attempted-value');
+        const passedSpan = document.getElementById('passed-value');
+        const failedSpan = document.getElementById('failed-value');
+        const detailedDiv = document.getElementById('detailed-answers');
+        const progressBar = document.getElementById('progress-bar');
+        const answerSection = document.getElementById('answer-section');
+        
+        let userAnswers = Array(quizData.length).fill(null);
+        
+        quizData.forEach((item, idx) => {
+            const qDiv = document.createElement('div');
+            qDiv.className = 'question';
+            qDiv.innerHTML = `
+                <div class="question-number">${idx+1}</div>
+                <div class="question-text">${item.q}</div>
+                <div class="embryo-note">Heart Development</div>
+                <div class="options">
+                    ${item.opts.map((opt, optIdx) => `<div class="option" data-q="${idx}" data-opt="${optIdx}" data-letter="${String.fromCharCode(65+optIdx)}"><div class="option-content">${opt}</div></div>`).join('')}
+                </div>
+            `;
+            questionsDiv.appendChild(qDiv);
+            
+            // Answer bank item - show correct option letter based on original order
+            const correctOrigLetter = String.fromCharCode(65 + rawData[idx].ans);
+            const ansItem = document.createElement('div');
+            ansItem.className = 'answer-item';
+            ansItem.innerHTML = `<strong>${idx+1}. ${item.q}</strong><br><span class="answer-correct">Correct: ${correctOrigLetter}. ${rawData[idx].opts[rawData[idx].ans]}</span>`;
+            answerBankDiv.appendChild(ansItem);
+        });
+        
+        function updateProgress() {
+            const answered = userAnswers.filter(a => a !== null).length;
+            progressBar.style.width = `${(answered/quizData.length)*100}%`;
+        }
+        
+        document.querySelectorAll('.option').forEach(opt => {
+            opt.addEventListener('click', function() {
+                const qIdx = parseInt(this.dataset.q);
+                const optVal = parseInt(this.dataset.opt);
+                const group = document.querySelectorAll(`.option[data-q="${qIdx}"]`);
+                group.forEach(g => g.classList.remove('selected'));
+                this.classList.add('selected');
+                userAnswers[qIdx] = optVal;
+                updateProgress();
+            });
+        });
+        
+        submitBtn.addEventListener('click', function() {
+            let score = 0, attempted = 0, passed = 0, failed = 0;
+            detailedDiv.innerHTML = '';
+            quizData.forEach((item, idx) => {
+                const userChoice = userAnswers[idx];
+                const correctAns = item.correct;
+                const correctOrigLetter = String.fromCharCode(65 + rawData[idx].ans);
+                const correctText = rawData[idx].opts[rawData[idx].ans];
+                const userOptElem = document.querySelector(`.option[data-q="${idx}"][data-opt="${userChoice}"]`);
+                if (userChoice !== null) {
+                    attempted++;
+                    if (userChoice === correctAns) { score++; passed++; }
+                    else { failed++; }
+                    const userLetter = userOptElem ? userOptElem.dataset.letter : '?';
+                    const userText = userOptElem ? userOptElem.querySelector('.option-content').innerText : 'Not selected';
+                    const markClass = (userChoice === correctAns) ? 'answer-correct' : 'answer-incorrect';
+                    detailedDiv.innerHTML += `<div class="answer-item"><strong>${idx+1}. ${item.q}</strong><br><span class="${markClass}">Your answer: ${userLetter}. ${userText}</span><br><span class="answer-correct">Correct: ${correctOrigLetter}. ${correctText}</span><br><div class="clinical-note">Answer: ${correctOrigLetter}</div></div>`;
+                } else {
+                    detailedDiv.innerHTML += `<div class="answer-item"><strong>${idx+1}. ${item.q}</strong><br><span class="answer-incorrect">Your answer: Not attempted</span><br><span class="answer-correct">Correct: ${correctOrigLetter}. ${correctText}</span><br><div class="clinical-note">Answer: ${correctOrigLetter}</div></div>`;
+                }
+            });
+            scoreSpan.innerText = `${score}/${quizData.length}`;
+            attemptedSpan.innerText = attempted;
+            passedSpan.innerText = passed;
+            failedSpan.innerText = failed;
+            resultsDiv.style.display = 'block';
+            answerSection.classList.add('visible');
+            resultsDiv.scrollIntoView({ behavior: 'smooth' });
+        });
+        
+        resetBtn.addEventListener('click', function() {
+            userAnswers.fill(null);
+            document.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected', 'correct', 'incorrect'));
+            resultsDiv.style.display = 'none';
+            answerSection.classList.remove('visible');
+            progressBar.style.width = '0%';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+        
+        document.getElementById('share-twitter').onclick = () => window.open(`https://twitter.com/intent/tweet?text=My%20score%20on%20Heart%20Development%201%20quiz%20is%20${scoreSpan.innerText}%20!%20Test%20yourself%3A%20${window.location.href}`);
+        document.getElementById('share-facebook').onclick = () => window.open(`https://www.facebook.com/sharer/sharer.php?u=${window.location.href}`);
+        document.getElementById('share-whatsapp').onclick = () => window.open(`https://wa.me/?text=I%20scored%20${scoreSpan.innerText}%20on%20this%20heart%20embryology%20quiz%3A%20${window.location.href}`);
+        document.getElementById('share-copy').onclick = () => { navigator.clipboard.writeText(`Heart Development Quiz Score: ${scoreSpan.innerText} - ${window.location.href}`).then(()=>alert('Copied!')); };
+    });
+</script>
+</body>
+</html>
